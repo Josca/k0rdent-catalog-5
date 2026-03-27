@@ -494,7 +494,7 @@ function DetailPanel({ item, onClose, tab, setTab, selVer, setSelVer, k0rdentVer
   return (
     <div onClick={onClose} style={{position:"fixed",top:0,left:0,right:0,bottom:0,zIndex:1000,display:"flex",alignItems:"stretch",justifyContent:"flex-end"}}>
       <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,background:"rgba(5,8,20,0.7)"}}/>
-      <div onClick={function(e){e.stopPropagation();}} style={{position:"relative",width:"min(680px,100vw)",background:B.bg1,borderLeft:"1px solid "+B.borderHi,display:"flex",flexDirection:"column",overflowY:"auto"}}>
+      <div className="k0-detail-panel" onClick={function(e){e.stopPropagation();}} style={{position:"relative",width:"min(680px,100vw)",background:B.bg1,borderLeft:"1px solid "+B.borderHi,display:"flex",flexDirection:"column",overflowY:"auto"}}>
         {eff==="mirantis-certified"&&<div style={{height:2,background:"linear-gradient(90deg,"+B.teal+","+B.cyan+")",flexShrink:0}}/>}
         <div style={{padding:"18px 22px 0",flexShrink:0}}>
           <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:12}}>
@@ -861,7 +861,7 @@ function SolutionDetail({ sol, onClose }) {
   return (
     <div onClick={onClose} style={{position:"fixed",top:0,left:0,right:0,bottom:0,zIndex:1000,display:"flex",alignItems:"stretch",justifyContent:"flex-end"}}>
       <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,background:"rgba(5,8,20,0.75)"}}/>
-      <div onClick={function(e){e.stopPropagation();}} style={{position:"relative",width:"min(700px,100vw)",background:B.bg1,borderLeft:"1px solid "+B.borderHi,display:"flex",flexDirection:"column",overflowY:"auto"}}>
+      <div className="k0-detail-panel" onClick={function(e){e.stopPropagation();}} style={{position:"relative",width:"min(700px,100vw)",background:B.bg1,borderLeft:"1px solid "+B.borderHi,display:"flex",flexDirection:"column",overflowY:"auto"}}>
         <div style={{height:3,background:"linear-gradient(90deg,"+bc+","+bc+"50)",flexShrink:0}}/>
         <div style={{padding:"20px 24px 0",flexShrink:0}}>
           <div style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:12}}>
@@ -976,7 +976,7 @@ function SolutionsPage({ initSolId, initScat, k0rdentVer }:{ initSolId?:string, 
           <span style={{marginLeft:"auto",fontSize:11,color:B.textMut}}>{filtered.length} bundles</span>
         </div>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(310px,1fr))",gap:13}}>
+      <div className="k0-sol-grid" style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(310px,1fr))",gap:13}}>
         {filtered.map(function(sol){return <SolutionCard key={sol.id} sol={sol} onClick={function(){openSol(sol);}}/>;}) }
       </div>
       <div style={{marginTop:28,padding:"16px 20px",background:B.bg2,border:"1px solid "+B.border,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:10}}>
@@ -1389,8 +1389,8 @@ function Nav({ view, setView, resetFilters, versions, k0rdentVer, onVersionChang
   var displayVer = k0rdentVer || versions.latest || "";
   return (
     <div style={{background:B.bg1,borderBottom:"1px solid "+B.border,padding:"0 20px",position:"sticky",top:0,zIndex:100}}>
-      <div style={{maxWidth:1140,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",height:52}}>
-        <div style={{display:"flex",alignItems:"center",gap:14}}>
+      <div className="k0-nav-inner" style={{maxWidth:1140,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",height:52}}>
+        <div className="k0-nav-left" style={{display:"flex",alignItems:"center",gap:14}}>
           <img onClick={function(){navTo("catalog");}} src={BASE+"k0rdent-logo.svg"} alt="k0rdent" style={{cursor:"pointer",height:22}} />
           {versions.versions.length > 0 && (
             <select value={displayVer} onChange={function(e:any){onVersionChange(e.target.value);}} style={{padding:"3px 6px",fontSize:10,background:B.bg2,color:B.teal,border:"1px solid "+B.border,borderRadius:4,cursor:"pointer",fontFamily:"monospace",outline:"none"}}>
@@ -1399,14 +1399,14 @@ function Nav({ view, setView, resetFilters, versions, k0rdentVer, onVersionChang
               })}
             </select>
           )}
-          <div style={{display:"flex",gap:0,height:52,alignItems:"stretch"}}>
+          <div className="k0-nav-tabs" style={{display:"flex",gap:0,height:52,alignItems:"stretch"}}>
             {["catalog","solutions","configurator"].map(function(v){
               var active=view===v;
               return <button key={v} onClick={function(){navTo(v);}} style={{padding:"0 14px",fontSize:12,color:active?B.teal:B.textSec,background:"transparent",border:"none",borderBottom:"2px solid "+(active?B.teal:"transparent"),cursor:"pointer",fontFamily:"inherit",fontWeight:active?600:400,textTransform:"capitalize"}}>{v}{v==="configurator"&&<span style={{fontSize:8,marginLeft:4,padding:"1px 4px",borderRadius:3,background:B.amber+"20",color:B.amber,fontWeight:700,textTransform:"uppercase",verticalAlign:"super"}}>Beta</span>}</button>;
             })}
           </div>
         </div>
-        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+        <div className="k0-nav-right" style={{display:"flex",gap:8,alignItems:"center"}}>
           <a href="https://github.com/k0rdent/catalog" target="_blank" rel="noreferrer" style={{fontSize:11,color:B.textSec,textDecoration:"none",padding:"5px 11px",border:"1px solid "+B.border,borderRadius:6,background:B.bg2}}>GitHub</a>
           <button onClick={function(){navTo("contribute");}} style={{fontSize:11,color:B.bg0,padding:"5px 11px",borderRadius:6,background:B.teal,fontWeight:600,border:"none",cursor:"pointer",fontFamily:"inherit"}}>Contribute</button>
         </div>
@@ -1650,6 +1650,28 @@ export default function App() {
 
   return (
     <div style={{fontFamily:"'Inter',-apple-system,sans-serif",background:B.bg0,minHeight:"100vh",padding:"0 0 40px"}}>
+      <style>{`
+        @media (max-width: 640px) {
+          .k0-nav-inner { flex-wrap: wrap; height: auto !important; padding: 8px 0 !important; gap: 6px !important; }
+          .k0-nav-left { flex-wrap: wrap; gap: 8px !important; }
+          .k0-nav-tabs { height: 36px !important; }
+          .k0-nav-tabs button { padding: 0 8px !important; font-size: 11px !important; }
+          .k0-nav-right { display: none !important; }
+          .k0-detail-panel { width: 100vw !important; }
+          .k0-card-grid { grid-template-columns: 1fr !important; }
+          .k0-sol-grid { grid-template-columns: 1fr !important; }
+          .k0-stats-row { flex-wrap: wrap !important; }
+          .k0-stats-row > div { flex: 1 1 45% !important; min-width: 120px !important; }
+          .k0-filter-row { flex-wrap: wrap !important; }
+          .k0-catalog-header { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+          .k0-catalog-layout { flex-direction: column !important; }
+          .k0-sidebar { width: 100% !important; position: static !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 8px !important; }
+          .k0-sidebar > div { flex: 1 1 auto; min-width: 120px; }
+        }
+        @media (max-width: 400px) {
+          .k0-nav-tabs button { padding: 0 5px !important; font-size: 10px !important; }
+        }
+      `}</style>
       <Nav view={view} setView={setView} versions={versions} k0rdentVer={k0rdentVer} onVersionChange={switchK0rdentVersion} resetFilters={function(){ setSearch(""); setTag("All"); setSupport("All"); setSort("A-Z"); setCompliance("All"); setSelected(null); setDetailTab("overview"); setDetailVer(""); history.pushState(null,"",buildCatalogUrl({view:"catalog",search:"",tag:"All",support:"All",sort:"A-Z",compliance:"All"})); }}/>
 
       {view==="contribute"&&<ContributePage/>}
@@ -1666,7 +1688,7 @@ export default function App() {
             <p style={{fontSize:12,color:B.textSec,margin:"0 0 10px",lineHeight:1.9}}>
               Every integration in this catalog sits at the intersection of <span style={{color:B.textPri,fontWeight:500}}>AI workloads</span> and <span style={{color:B.textPri,fontWeight:500}}>cloud-native Kubernetes infrastructure</span> — a deliberately narrow space defined by the real operational challenges of running AI in production: provisioning GPU nodes in minutes, serving models that scale to zero when idle and to hundreds of replicas under load, storing billion-scale vector embeddings with sub-10ms retrieval, and meeting the policy and audit requirements that regulated industries demand before a model touches sensitive data. A tool earns a place here by being production-hardened on real enterprise clusters, composable with the other integrations in the catalog, and relevant to the full AI infrastructure lifecycle — from raw compute and distributed training through model serving, RAG pipelines, observability, security, and FinOps. The result is not a directory of everything that exists, but a curated set of <span style={{color:B.teal,fontWeight:500}}>best-in-class integrations</span> that Mirantis platform engineers have validated, assembled into composable blueprints, and made deployable in minutes on any infrastructure.
             </p>
-            <div style={{display:"flex",gap:0,background:B.bg2,border:"1px solid "+B.border,borderRadius:8,overflow:"hidden",marginBottom:10}}>
+            <div className="k0-stats-row" style={{display:"flex",gap:0,background:B.bg2,border:"1px solid "+B.border,borderRadius:8,overflow:"hidden",marginBottom:10}}>
               {[{n:RAW.length,l:"Integrations",sub:"hand-selected",c:B.teal},{n:testedCount,l:"CI-validated",sub:"across 6 providers",c:B.green},{n:certCount,l:"Certified",sub:"enterprise 24x7 SLA",c:B.cyan},{n:"13",l:"Categories",sub:"GPU to GitOps",c:B.purple},{n:"4",l:"Compliance",sub:"SOC 2 · HIPAA · PCI · FedRAMP",c:B.amber}].map(function(s,si,arr){
                 return <div key={s.l} style={{flex:"1 1 0",padding:"9px 12px",borderRight:si<arr.length-1?"1px solid "+B.border:"none",minWidth:0}}><div style={{fontSize:16,fontWeight:700,color:s.c,fontFamily:"monospace",lineHeight:1}}>{s.n}</div><div style={{fontSize:10.5,color:B.textPri,fontWeight:500,marginTop:2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{s.l}</div><div style={{fontSize:9,color:B.textMut,marginTop:1,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{s.sub}</div></div>;
               })}
@@ -1690,8 +1712,8 @@ export default function App() {
             </div>
           </div>
 
-          <div style={{display:"flex",gap:13,alignItems:"flex-start"}}>
-            <div style={{width:196,flexShrink:0,display:"flex",flexDirection:"column",gap:13,position:"sticky",top:62}}>
+          <div className="k0-catalog-layout" style={{display:"flex",gap:13,alignItems:"flex-start"}}>
+            <div className="k0-sidebar" style={{width:196,flexShrink:0,display:"flex",flexDirection:"column",gap:13,position:"sticky",top:62}}>
               <div style={{position:"relative"}}>
                 <span style={{position:"absolute",left:8,top:"50%",transform:"translateY(-50%)",color:B.textMut,fontSize:12,pointerEvents:"none"}}>⌕</span>
                 <input value={search} onChange={function(e){setSearch(e.target.value);}} placeholder="Search apps..." style={{width:"100%",boxSizing:"border-box",paddingLeft:24,paddingRight:9,paddingTop:6,paddingBottom:6,border:"1px solid "+B.borderHi,borderRadius:6,fontSize:11.5,outline:"none",background:B.bg3,color:B.textPri}}/>
@@ -1739,7 +1761,7 @@ export default function App() {
             <div style={{flex:1,minWidth:0}}>
               {filtered.length===0
                 ?<div style={{textAlign:"center",padding:"60px 0",color:B.textMut,fontSize:13}}>No applications match your filters.</div>
-                :<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(255px,1fr))",gap:10}}>
+                :<div className="k0-card-grid" style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(255px,1fr))",gap:10}}>
                   {filtered.map(function(item){return <Card key={item.name} item={item} onOpen={function(){setSelected(item);setDetailTab("overview");setDetailVer("");history.pushState(null,"",buildAppUrl(item.name,"overview","",k0rdentVer));}}/>;}) }
                 </div>
               }
