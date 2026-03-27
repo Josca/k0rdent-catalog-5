@@ -496,7 +496,7 @@ function DetailPanel({ item, onClose, tab, setTab, selVer, setSelVer, k0rdentVer
       <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,background:"rgba(5,8,20,0.7)"}}/>
       <div className="k0-detail-panel" onClick={function(e){e.stopPropagation();}} style={{position:"relative",width:"min(680px,100vw)",background:B.bg1,borderLeft:"1px solid "+B.borderHi,display:"flex",flexDirection:"column",overflowY:"auto"}}>
         {eff==="mirantis-certified"&&<div style={{height:2,background:"linear-gradient(90deg,"+B.teal+","+B.cyan+")",flexShrink:0}}/>}
-        <div style={{padding:"18px 22px 0",flexShrink:0}}>
+        <div className="k0-detail-header" style={{padding:"18px 22px 0",flexShrink:0}}>
           <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:12}}>
             <AppLogo name={item.name} size={44} accent={accent} logo={item.logo} brandColor={item.brandColor}/>
             <div style={{flex:1}}>
@@ -511,15 +511,15 @@ function DetailPanel({ item, onClose, tab, setTab, selVer, setSelVer, k0rdentVer
             </div>
             <button onClick={onClose} style={{background:"transparent",border:"1px solid "+B.border,borderRadius:6,width:30,height:30,display:"flex",alignItems:"center",justifyContent:"center",color:B.textSec,cursor:"pointer",fontSize:14,fontFamily:"inherit",flexShrink:0}}>✕</button>
           </div>
-          <div style={{display:"flex",borderBottom:"1px solid "+B.border,marginLeft:-22,marginRight:-22,paddingLeft:22}}>
+          <div className="k0-detail-tabs" style={{display:"flex",flexWrap:"wrap",borderBottom:"1px solid "+B.border,marginLeft:-22,marginRight:-22,paddingLeft:22,gap:0}}>
             {["overview","install","compatibility","test results","cost"].filter(function(t){ return t !== "install" || item.showInstall !== false; }).map(function(t){
               return <button key={t} onClick={function(){setTab(t);}} style={tabStyle(tab===t)}>{t.charAt(0).toUpperCase()+t.slice(1)}</button>;
             })}
-            <div style={{flex:1}}/>
+            <div style={{flex:1,minWidth:20}}/>
             {item.doc_link && <a href={item.doc_link} target="_blank" rel="noreferrer" style={{padding:"8px 16px",fontSize:11,color:B.bg0,textDecoration:"none",background:B.teal,fontWeight:600,alignSelf:"flex-end",marginBottom:-1,borderTopLeftRadius:5,borderTopRightRadius:5}}>Docs</a>}
           </div>
         </div>
-        <div style={{padding:"18px 22px",flex:1}}>
+        <div className="k0-detail-content" style={{padding:"18px 22px",flex:1}}>
           {tab==="overview" && (
             <div>
               <p style={{fontSize:13,color:B.textSec,lineHeight:1.8,marginTop:0}}>{item.desc}</p>
@@ -863,7 +863,7 @@ function SolutionDetail({ sol, onClose }) {
       <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,background:"rgba(5,8,20,0.75)"}}/>
       <div className="k0-detail-panel" onClick={function(e){e.stopPropagation();}} style={{position:"relative",width:"min(700px,100vw)",background:B.bg1,borderLeft:"1px solid "+B.borderHi,display:"flex",flexDirection:"column",overflowY:"auto"}}>
         <div style={{height:3,background:"linear-gradient(90deg,"+bc+","+bc+"50)",flexShrink:0}}/>
-        <div style={{padding:"20px 24px 0",flexShrink:0}}>
+        <div className="k0-detail-header" style={{padding:"20px 24px 0",flexShrink:0}}>
           <div style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:12}}>
             {sol.logo ? <AppLogo name={sol.appName||""} size={48} accent={bc} logo={sol.logo}/> : <div style={{width:48,height:48,borderRadius:11,background:bc+"18",border:"1px solid "+bc+"35",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,color:bc,flexShrink:0}}>{sol.icon}</div>}
             <div style={{flex:1}}>
@@ -878,7 +878,7 @@ function SolutionDetail({ sol, onClose }) {
           </div>
           <p style={{fontSize:12.5,color:B.textSec,lineHeight:1.8,margin:"0 0 16px"}}>{sol.desc}</p>
         </div>
-        <div style={{padding:"0 24px 24px",flex:1}}>
+        <div className="k0-detail-content" style={{padding:"0 24px 24px",flex:1}}>
           <div style={{marginBottom:16}}>
             <div style={{fontSize:9.5,fontWeight:600,color:B.textMut,textTransform:"uppercase",marginBottom:8}}>Use cases</div>
             {sol.useCases.map(function(u){return <div key={u} style={{display:"flex",gap:8,marginBottom:6}}><span style={{color:bc,fontSize:11,flexShrink:0}}>◈</span><span style={{fontSize:12,color:B.textSec,lineHeight:1.6}}>{u}</span></div>;})}
@@ -1657,7 +1657,11 @@ export default function App() {
           .k0-nav-tabs { height: 36px !important; }
           .k0-nav-tabs button { padding: 0 8px !important; font-size: 11px !important; }
           .k0-nav-right { display: none !important; }
-          .k0-detail-panel { width: 100vw !important; }
+          .k0-detail-panel { width: 100vw !important; border-left: none !important; }
+          .k0-detail-tabs { padding-left: 12px !important; margin-left: -12px !important; margin-right: -12px !important; }
+          .k0-detail-tabs button { padding: 6px 8px !important; font-size: 11px !important; white-space: nowrap !important; }
+          .k0-detail-content { padding: 12px 14px !important; }
+          .k0-detail-header { padding: 12px 14px 0 !important; }
           .k0-card-grid { grid-template-columns: 1fr !important; }
           .k0-sol-grid { grid-template-columns: 1fr !important; }
           .k0-stats-row { flex-wrap: wrap !important; }
